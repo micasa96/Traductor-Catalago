@@ -23,6 +23,9 @@ USE_TMDB_ID_META = True
 REQUEST_TIMEOUT = 120
 COMPATIBILITY_ID = ['tt', 'kitsu', 'mal']
 
+# TMDB API Key - Configuración por defecto
+TMDB_API_KEY = os.environ.get('TMDB_API_KEY', '719660c2edb5d82eb26ba3a702dda1d4')
+
 # Cache set
 meta_cache = Cache(maxsize=100000, ttl=timedelta(hours=12).total_seconds())
 meta_cache.clear()
@@ -49,15 +52,43 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-stremio_headers = {
+# Headers universales para todos los dispositivos Stremio
+universal_stremio_headers = {
     'connection': 'keep-alive', 
-    'user-agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.15.2 Chrome/83.0.4103.122 Safari/537.36 StremioShell/4.4.168', 
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 StremioShell/4.4.168', 
     'accept': '*/*', 
     'origin': 'https://app.strem.io', 
     'sec-fetch-site': 'cross-site', 
     'sec-fetch-mode': 'cors', 
     'sec-fetch-dest': 'empty', 
-    'accept-encoding': 'gzip, deflate, br'
+    'accept-encoding': 'gzip, deflate, br',
+    'accept-language': 'es-ES,es;q=0.9,en;q=0.8'
+}
+
+# Headers específicos para LG WebOS (como respaldo)
+lg_webos_headers = {
+    'connection': 'keep-alive',
+    'user-agent': 'Mozilla/5.0 (WebOS; Linux/SmartTV) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.15.2 Chrome/83.0.4103.122 Safari/537.36 StremioShell/4.4.168',
+    'accept': '*/*',
+    'origin': 'https://app.strem.io',
+    'sec-fetch-site': 'cross-site',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-dest': 'empty',
+    'accept-encoding': 'gzip, deflate, br',
+    'accept-language': 'es-ES,es;q=0.9,en;q=0.8'
+}
+
+# Headers específicos para Android (como respaldo)
+android_headers = {
+    'connection': 'keep-alive',
+    'user-agent': 'Mozilla/5.0 (Linux; Android 13; SM-G998B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36 StremioShell/4.4.168',
+    'accept': '*/*',
+    'origin': 'https://app.strem.io',
+    'sec-fetch-site': 'cross-site',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-dest': 'empty',
+    'accept-encoding': 'gzip, deflate, br',
+    'accept-language': 'es-ES,es;q=0.9,en;q=0.8'
 }
 
 tmdb_addon_url = 'https://94c8cb9f702d-tmdb-addon.baby-beamup.club/%7B%22provide_imdbId%22%3A%22true%22%2C%22language%22%3A%22es-ES%22%7D'
@@ -106,7 +137,7 @@ async def get_manifest(addon_url):
     if not is_translated:
         manifest['translated'] = True
         manifest['t_language'] = 'es-ES'
-        manifest['name'] += 'ES'
+        manifest['name'] += ' 🇪🇸'
 
         if 'description' in manifest:
             manifest['description'] += f" | Traducido por Toast Translator. {translator_version}"
