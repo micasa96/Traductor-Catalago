@@ -41,10 +41,11 @@ async def fetch_and_retry(client: httpx.AsyncClient, id: str, url: str, params: 
 # Get from external source id
 async def get_tmdb_data(client: httpx.AsyncClient, id: str, source: str) -> dict:
     params = {
-        "external_source": source,
-        "language": "it-IT",
-        "api_key": TMDB_API_KEY
+    "external_source": source,
+    "language": "es-ES",
+    "api_key": TMDB_API_KEY
     }
+
 
     url = f"https://api.themoviedb.org/3/find/{id}"
     item = tmp_cache.get(id)
