@@ -60,13 +60,13 @@ stremio_headers = {
     'accept-encoding': 'gzip, deflate, br'
 }
 
-tmdb_addon_url = 'https://94c8cb9f702d-tmdb-addon.baby-beamup.club/%7B%22provide_imdbId%22%3A%22true%22%2C%22language%22%3A%22it-IT%22%7D'
-tmdb_madari_url = 'https://tmdb-catalog.madari.media/%7B%22provide_imdbId%22%3A%22true%22%2C%22language%22%3A%22it-IT%22%7D'
-tmdb_elfhosted = 'https://tmdb.elfhosted.com/%7B%22provide_imdbId%22%3A%22true%22%2C%22language%22%3A%22it-IT%22%7D'
+tmdb_addon_url = 'https://94c8cb9f702d-tmdb-addon.baby-beamup.club/%7B%22provide_imdbId%22%3A%22true%22%2C%22language%22%3A%22es-ES%22%7D'
+tmdb_madari_url = 'https://tmdb-catalog.madari.media/%7B%22provide_imdbId%22%3A%22true%22%2C%22language%22%3A%22es-ES%22%7D'
+tmdb_elfhosted = 'https://tmdb.elfhosted.com/%7B%22provide_imdbId%22%3A%22true%22%2C%22language%22%3A%22es-ES%22%7D'
 tmdb_addons_pool = [
-    'https://94c8cb9f702d-tmdb-addon.baby-beamup.club/%7B%22provide_imdbId%22%3A%22true%22%2C%22language%22%3A%22it-IT%22%7D', # Official
-    'https://tmdb-catalog.madari.media/%7B%22provide_imdbId%22%3A%22true%22%2C%22language%22%3A%22it-IT%22%7D', # Madari
-    'https://tmdb.elfhosted.com/%7B%22provide_imdbId%22%3A%22true%22%2C%22language%22%3A%22it-IT%22%7D' # Elfhosted
+    'https://94c8cb9f702d-tmdb-addon.baby-beamup.club/%7B%22provide_imdbId%22%3A%22true%22%2C%22language%22%3A%22es-ES%22%7D', # Official
+    'https://tmdb-catalog.madari.media/%7B%22provide_imdbId%22%3A%22true%22%2C%22language%22%3A%22es-ES%22%7D', # Madari
+    'https://tmdb.elfhosted.com/%7B%22provide_imdbId%22%3A%22true%22%2C%22language%22%3A%22es-ES%22%7D' # Elfhosted
 ]
 
 tmdb_addon_meta_url = tmdb_addons_pool[0]
@@ -105,13 +105,13 @@ async def get_manifest(addon_url):
     is_translated = manifest.get('translated', False)
     if not is_translated:
         manifest['translated'] = True
-        manifest['t_language'] = 'it-IT'
-        manifest['name'] += ' 🇮🇹'
+        manifest['t_language'] = 'es-ES'
+        manifest['name'] += 'ES'
 
         if 'description' in manifest:
-            manifest['description'] += f" | Tradotto da Toast Translator. {translator_version}"
+            manifest['description'] += f" | Traducido por Toast Translator. {translator_version}"
         else:
-            manifest['description'] = f"Tradotto da Toast Translator. {translator_version}"
+            manifest['description'] = f"Traducido por Toast Translator. {translator_version}"
     
     if FORCE_PREFIX:
         if 'idPrefixes' in manifest:
